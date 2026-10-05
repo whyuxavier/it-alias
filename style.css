@@ -1,0 +1,1245 @@
+/* =====================================================
+   ОСНОВНІ ЗМІННІ
+===================================================== */
+
+:root {
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --surface-secondary: #f8f9fa;
+
+  --text: #20242a;
+  --muted: #6b7280;
+
+  --border: #d8dce1;
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+
+  --success: #16a34a;
+  --success-light: #dcfce7;
+
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+
+  --warning: #d97706;
+  --warning-light: #fff7ed;
+
+  --shadow: 0 2px 8px rgba(0, 0, 0, .08);
+}
+
+body.dark-theme {
+
+  --bg: #181a1d;
+  --surface: #22252a;
+  --surface-secondary: #2b2f35;
+
+  --text: #f1f3f5;
+  --muted: #a6adb6;
+
+  --border: #3b4047;
+
+  --primary: #4f83ee;
+  --primary-hover: #6795f2;
+
+  --success: #35b86b;
+  --success-light: #203d2b;
+
+  --danger: #ef5350;
+  --danger-light: #432527;
+
+  --warning: #f59e0b;
+  --warning-light: #43331c;
+
+  --shadow: 0 2px 10px rgba(0, 0, 0, .25);
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+
+  margin: 0;
+
+  min-height: 100vh;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background: var(--bg);
+
+  color: var(--text);
+
+  transition:
+    background .2s ease,
+    color .2s ease;
+}
+
+
+/* =====================================================
+   КОНТЕЙНЕР
+===================================================== */
+
+.container {
+
+  width: 100%;
+
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  padding:
+    28px 15px 90px;
+}
+
+
+/* =====================================================
+   ЗАГОЛОВОК
+===================================================== */
+
+h1 {
+
+  text-align: center;
+
+  margin:
+    0 0 8px;
+
+  font-size: 30px;
+}
+
+h2 {
+
+  margin-top: 10px;
+}
+
+.subtitle {
+
+  text-align: center;
+
+  color: var(--muted);
+
+  margin-bottom: 25px;
+
+  line-height: 1.45;
+}
+
+
+/* =====================================================
+   ПАНЕЛІ
+===================================================== */
+
+.panel {
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: 10px;
+
+  padding: 20px;
+
+  box-shadow: var(--shadow);
+
+  margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+input {
+
+  width: 100%;
+
+  padding: 11px 12px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 6px;
+
+  font-size: 16px;
+
+  background: var(--surface);
+
+  color: var(--text);
+
+  outline: none;
+
+  margin-bottom: 10px;
+}
+
+input:focus {
+
+  border-color:
+    var(--primary);
+}
+
+
+/* =====================================================
+   КНОПКИ
+===================================================== */
+
+button {
+
+  border: 0;
+
+  border-radius: 7px;
+
+  padding:
+    11px 17px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+
+  background:
+    var(--primary);
+
+  color: white;
+
+  transition:
+    background .15s ease,
+    transform .1s ease;
+}
+
+button:hover {
+
+  background:
+    var(--primary-hover);
+}
+
+button:active {
+
+  transform:
+    scale(.98);
+}
+
+.secondary {
+
+  background:
+    var(--surface-secondary);
+
+  color:
+    var(--text);
+
+  border:
+    1px solid var(--border);
+}
+
+.secondary:hover {
+
+  background:
+    var(--border);
+}
+
+.danger {
+
+  background:
+    transparent;
+
+  color:
+    var(--danger);
+
+  border:
+    1px solid var(--border);
+}
+
+.danger:hover {
+
+  background:
+    var(--danger-light);
+}
+
+
+/* =====================================================
+   НАЛАШТУВАННЯ
+===================================================== */
+
+.setting {
+
+  margin-bottom: 22px;
+}
+
+.setting-title {
+
+  font-weight: bold;
+
+  margin-bottom: 8px;
+}
+
+label {
+
+  display: block;
+
+  font-weight: bold;
+
+  margin-bottom: 8px;
+}
+
+
+/* =====================================================
+   ЧАС
+===================================================== */
+
+.time-buttons {
+
+  display: flex;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+}
+
+.time-buttons button {
+
+  background:
+    var(--surface-secondary);
+
+  color:
+    var(--text);
+
+  border:
+    1px solid var(--border);
+}
+
+.time-buttons button.active {
+
+  background:
+    var(--primary);
+
+  color: white;
+
+  border-color:
+    var(--primary);
+}
+
+
+/* =====================================================
+   SWITCH
+===================================================== */
+
+.switch-row {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.switch-description {
+
+  color:
+    var(--muted);
+
+  font-size: 14px;
+
+  line-height: 1.4;
+}
+
+.switch {
+
+  position: relative;
+
+  width: 54px;
+
+  height: 30px;
+
+  flex-shrink: 0;
+}
+
+.switch input {
+
+  opacity: 0;
+
+  width: 0;
+
+  height: 0;
+
+  margin: 0;
+}
+
+.slider {
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    var(--border);
+
+  border-radius: 30px;
+
+  cursor: pointer;
+}
+
+.slider::before {
+
+  content: "";
+
+  position: absolute;
+
+  width: 22px;
+
+  height: 22px;
+
+  left: 4px;
+
+  top: 4px;
+
+  background: white;
+
+  border-radius: 50%;
+
+  transition:
+    transform .2s ease;
+}
+
+.switch input:checked + .slider {
+
+  background:
+    var(--primary);
+}
+
+.switch input:checked + .slider::before {
+
+  transform:
+    translateX(24px);
+}
+
+
+/* =====================================================
+   КОМАНДИ
+===================================================== */
+
+.team-row {
+
+  display: flex;
+
+  gap: 7px;
+
+  margin-bottom: 8px;
+}
+
+.team-row input {
+
+  margin: 0;
+
+  flex: 1;
+}
+
+.team-row button {
+
+  width: 43px;
+
+  min-width: 43px;
+
+  padding: 5px;
+}
+
+
+/* Оновлення назви */
+
+.team-refresh {
+
+  background:
+    var(--primary);
+
+  color: white;
+
+  border: 0;
+}
+
+.team-refresh:hover {
+
+  background:
+    var(--primary-hover);
+}
+
+
+/* =====================================================
+   ПОЧАТИ ГРУ
+===================================================== */
+
+.start-button {
+
+  width: 100%;
+
+  margin-top: 10px;
+
+  font-size: 18px;
+
+  font-weight: bold;
+}
+
+
+/* =====================================================
+   ПОМИЛКА
+===================================================== */
+
+.error {
+
+  color:
+    var(--danger);
+
+  margin-top: 10px;
+
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   HIDDEN
+===================================================== */
+
+.hidden {
+
+  display: none !important;
+}
+
+
+/* =====================================================
+   ГРА
+===================================================== */
+
+.game-header {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  gap: 10px;
+
+  text-align: center;
+
+  margin-bottom: 15px;
+}
+
+.header-item {
+
+  background:
+    var(--surface);
+
+  border:
+    1px solid var(--border);
+
+  padding: 12px;
+
+  border-radius: 8px;
+
+  box-shadow:
+    var(--shadow);
+}
+
+.header-label {
+
+  font-size: 12px;
+
+  color:
+    var(--muted);
+}
+
+.header-value {
+
+  font-size: 24px;
+
+  font-weight: bold;
+
+  margin-top: 4px;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+.timer {
+
+  color:
+    var(--danger);
+}
+
+
+/* =====================================================
+   КАРТКА СЛОВА
+===================================================== */
+
+.word-card {
+
+  background:
+    var(--surface);
+
+  min-height: 300px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 12px;
+
+  box-shadow:
+    var(--shadow);
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 30px;
+
+  user-select: none;
+
+  touch-action: none;
+
+  cursor: grab;
+
+  transform:
+    none !important;
+
+  transition:
+    background-color .15s ease,
+    border-color .15s ease;
+}
+
+.word-card.dragging {
+
+  cursor: grabbing;
+}
+
+.word-card.correct-flash {
+
+  background:
+    var(--success-light);
+
+  border-color:
+    var(--success);
+}
+
+.word-card.skip-flash {
+
+  background:
+    var(--danger-light);
+
+  border-color:
+    var(--danger);
+}
+
+.word-label {
+
+  color:
+    var(--muted);
+
+  text-transform:
+    uppercase;
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 25px;
+}
+
+.word {
+
+  font-size:
+    clamp(38px, 8vw, 65px);
+
+  font-weight: bold;
+
+  overflow-wrap:
+    anywhere;
+}
+
+.hint {
+
+  color:
+    var(--muted);
+
+  margin-top: 30px;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   КНОПКИ ДІЙ
+===================================================== */
+
+.action-buttons {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.action-buttons button {
+
+  min-height: 64px;
+
+  font-size: 18px;
+}
+
+.skip {
+
+  background:
+    var(--surface-secondary);
+
+  color:
+    var(--text);
+
+  border:
+    1px solid var(--border);
+}
+
+.skip:hover {
+
+  background:
+    var(--border);
+}
+
+.correct {
+
+  background:
+    var(--success);
+}
+
+.correct:hover {
+
+  background:
+    #15803d;
+}
+
+.keyboard-hint {
+
+  text-align: center;
+
+  color:
+    var(--muted);
+
+  font-size: 13px;
+
+  margin-top: 10px;
+}
+
+
+/* =====================================================
+   КІНЕЦЬ РАУНДУ
+===================================================== */
+
+.round-buttons {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+.continue-button {
+
+  background:
+    var(--primary);
+}
+
+.finish-button {
+
+  background:
+    var(--surface-secondary);
+
+  color:
+    var(--text);
+
+  border:
+    1px solid var(--border);
+}
+
+
+/* =====================================================
+   РАХУНОК
+===================================================== */
+
+.scoreboard {
+
+  margin-top: 20px;
+
+  background:
+    var(--surface);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 10px;
+
+  padding: 15px;
+
+  box-shadow:
+    var(--shadow);
+}
+
+.score-row {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding:
+    12px 5px;
+
+  border-bottom:
+    1px solid var(--border);
+}
+
+.score-row:last-child {
+
+  border-bottom:
+    0;
+}
+
+.round-score {
+
+  font-size: 18px;
+
+  color:
+    var(--muted);
+}
+
+
+/* =====================================================
+   НИЖНЯ ПАНЕЛЬ
+===================================================== */
+
+.bottom-bar {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding-top: 15px;
+
+  margin-top: 10px;
+
+  border-top:
+    0px solid var(--border);
+}
+
+.rules-button {
+
+  padding:
+    4px 0;
+
+  background:
+    transparent;
+
+  color:
+    var(--muted);
+
+  font-size: 14px;
+
+  border: 0;
+}
+
+.rules-button:hover {
+
+  background:
+    transparent;
+
+  color:
+    var(--primary);
+}
+
+.social-links {
+
+  display: flex;
+
+  gap: 14px;
+
+  align-items: center;
+}
+
+.social-links a {
+
+  color:
+    var(--muted);
+
+  text-decoration:
+    none;
+
+  font-size: 14px;
+}
+
+.social-links a:hover {
+
+  color:
+    var(--primary);
+
+  text-decoration:
+    underline;
+}
+
+
+/* =====================================================
+   ПРАВИЛА
+===================================================== */
+
+.rules-wrap {
+
+  position: relative;
+}
+
+.rules-popover {
+
+  position: absolute;
+
+  left: 0;
+
+  bottom:
+    calc(100% + 10px);
+
+  width:
+    min(380px, calc(100vw - 30px));
+
+  background:
+    var(--surface);
+
+  color:
+    var(--text);
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 8px;
+
+  padding: 15px 17px;
+
+  box-shadow:
+    var(--shadow);
+
+  z-index: 50;
+
+  font-size: 14px;
+
+  line-height: 1.45;
+}
+
+.rules-popover strong {
+
+  display: block;
+
+  font-size: 16px;
+
+  margin-bottom: 10px;
+}
+
+.rules-popover p {
+
+  margin:
+    7px 0;
+}
+
+
+/* =====================================================
+   ПЕРЕМИКАЧ ДЕНЬ / НІЧ
+===================================================== */
+
+.theme-toggle {
+
+  position: fixed;
+
+  top: 14px;
+
+  right: 14px;
+
+  z-index: 100;
+
+  width: 40px;
+
+  height: 40px;
+
+  padding: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    var(--surface);
+
+  color:
+    var(--text);
+
+  border:
+    0px solid var(--border);
+
+  border-radius: 7px;
+
+  box-shadow:
+    var(--shadow);
+
+  font-size: 18px;
+}
+
+.theme-toggle:hover {
+
+  background:
+    var(--surface-secondary);
+}
+
+/* =====================================================
+   ФОН VANTA GLOBE
+===================================================== */
+
+#vanta-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+
+  filter: blur(0px);
+  opacity: 0.3;
+}
+
+
+/* Увесь інтерфейс поверх Globe */
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+   
+/* =====================================================
+   МОБІЛЬНА ВЕРСІЯ
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .container {
+
+    padding:
+      18px 10px 80px;
+  }
+
+  h1 {
+
+    font-size: 26px;
+  }
+
+  .subtitle {
+
+    font-size: 14px;
+
+    margin-bottom: 17px;
+  }
+
+  .panel {
+
+    padding: 15px;
+
+    border-radius: 9px;
+  }
+
+  .time-buttons {
+
+    display: grid;
+
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .time-buttons button {
+
+    min-height: 44px;
+  }
+
+  button {
+
+    min-height: 44px;
+  }
+
+  .game-header {
+
+    gap: 5px;
+  }
+
+  .header-item {
+
+    padding:
+      9px 4px;
+  }
+
+  .header-label {
+
+    font-size: 10px;
+  }
+
+  .header-value {
+
+    font-size: 18px;
+  }
+
+  .word-card {
+
+    min-height: 55vh;
+
+    max-height: 65vh;
+
+    padding:
+      20px 15px;
+  }
+
+  .word-label {
+
+    font-size: 11px;
+
+    margin-bottom: 18px;
+  }
+
+  .word {
+
+    font-size:
+      clamp(34px, 10vw, 55px);
+
+    line-height: 1.1;
+  }
+
+  .hint {
+
+    margin-top: 22px;
+
+    font-size: 12px;
+  }
+
+  .action-buttons {
+
+    gap: 8px;
+
+    margin-top: 10px;
+  }
+
+  .action-buttons button {
+
+    min-height: 60px;
+
+    font-size: 17px;
+  }
+
+  .round-buttons {
+
+    grid-template-columns:
+      1fr;
+  }
+
+  .bottom-bar {
+
+    align-items:
+      flex-start;
+  }
+
+  .rules-popover {
+
+    width:
+      calc(100vw - 30px);
+  }
+
+  .theme-toggle {
+
+    top: 9px;
+
+    right: 9px;
+  }
+}
+
+
+
+
+/* СКЛАДНІСТЬ */
+
+.difficulty-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.difficulty-buttons button {
+  background: var(--surface-secondary);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.difficulty-buttons button.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.difficulty-description {
+  margin-top: 8px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.round-icon {
+  font-size: 50px;
+}
+
+.finish-icon {
+  font-size: 60px;
+}
+
+.new-game-button {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .difficulty-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

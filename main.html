@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Інформатичний Еліас</title>
+  <link rel="icon" type="image/png" href="https://it-alias.mrochkodsgn.workers.dev/computer.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+   <div id="vanta-bg"><span style="position: relative; z-index: 1;">
+      
+   </span><canvas class="vanta-canvas" width="1920" height="912" style="display: block; position: absolute; z-index: 0; top: 0px; left: 0px; width: 1536px; height: 730px;"></canvas></div>
+
+<!-- =====================================================
+     ПЕРЕМИКАЧ ТЕМИ
+===================================================== -->
+
+<button id="themeToggle" class="theme-toggle" type="button" title="Темна тема" aria-label="Змінити тему">☾</button>
+
+
+<div class="container">
+
+
+<!-- =====================================================
+     НАЛАШТУВАННЯ
+===================================================== -->
+
+<div id="setup">
+
+  <h1>
+    🖥️ Інформатичний Еліас
+  </h1>
+
+  <div class="subtitle">
+    Пояснюй! Відгадуй! Набирай бали!
+  </div>
+
+
+  <div class="panel">
+
+
+    <!-- ЧАС -->
+
+    <div class="setting">
+
+      <div class="setting-title">
+        ⏱ Час одного раунду
+      </div>
+
+      <div class="time-buttons">
+
+        <button data-time="30">
+          30 с
+        </button>
+
+        <button data-time="60" class="active">
+          60 с
+        </button>
+
+        <button data-time="90">
+          90 с
+        </button>
+
+        <button data-time="120">
+          120 с
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- СКЛАДНІСТЬ -->
+
+    <div class="setting">
+
+      <div class="setting-title">
+        🎯 Складність
+      </div>
+
+      <div class="difficulty-buttons">
+
+        <button type="button" data-difficulty="easy" class="active">
+          Легкий
+        </button>
+
+        <button type="button" data-difficulty="hard">
+          Складний
+        </button>
+
+      </div>
+
+      <div class="switch-description difficulty-description">
+        Легкий — простіші слова на рівні 8 класу. Складний — усі слова.
+      </div>
+
+    </div>
+
+
+    <!-- ШТРАФ -->
+
+    <div class="setting">
+
+      <div class="switch-row">
+
+        <div>
+
+          <div class="setting-title">
+            ⚠️ Штраф за пропуск
+          </div>
+
+          <div class="switch-description">
+            За пропущене слово знімається 1 бал
+          </div>
+
+        </div>
+
+
+        <label class="switch">
+
+          <input type="checkbox" id="skipPenalty" checked>
+
+          <span class="slider"></span>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <!-- КОМАНДИ -->
+
+    <div class="setting">
+
+      <label>
+        👥 Команди
+      </label>
+
+      <div id="teams"></div>
+
+      <button type="button" id="addTeamButton" class="secondary">
+        ＋ Додати команду
+      </button>
+
+    </div>
+
+
+    <button type="button" id="startButton" class="start-button">
+      ▶ Почати гру
+    </button>
+
+
+    <div id="error" class="error hidden"></div>
+
+  </div>
+
+
+  <!-- =================================================
+       НИЖНЯ ПАНЕЛЬ
+  ================================================== -->
+
+  <div class="bottom-bar">
+
+    <div class="rules-wrap">
+
+      <button type="button" id="rulesButton" class="rules-button">
+        Правила гри
+      </button>
+
+
+      <div id="rulesPopover" class="rules-popover hidden">
+
+        <strong>
+          Правила гри Еліас
+        </strong>
+
+        <p>
+          Один гравець пояснює слово,
+          не називаючи саме слово
+          або його однокореневі слова.
+        </p>
+
+        <p>
+          Команда намагається відгадати
+          якомога більше слів за відведений час.
+        </p>
+
+        <p>
+          → Відгадано — +1 бал.
+          ← Пропустити — наступне слово.
+        </p>
+
+        <p>
+          Якщо увімкнено штраф за пропуск,
+          за нього знімається 1 бал.
+        </p>
+
+        <p>
+          Коли час закінчився,
+          можна завершити пояснення поточного
+          слова. Після натискання кнопки пропуск/відгадано раунд завершується.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="social-links">
+
+      <a href="https://t.me/informatics_hub" target="_blank" rel="noopener">
+        Telegram
+      </a>
+
+      <a href="https://www.instagram.com/whyuxavier?stkn=eDc1bm9vMnk1dmNh" target="_blank" rel="noopener">
+        Instagram
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     ГРА
+===================================================== -->
+
+<div id="game" class="hidden">
+
+
+  <div class="game-header">
+
+
+    <div class="header-item">
+
+      <div class="header-label">
+        КОМАНДА
+      </div>
+
+      <div id="currentTeam" class="header-value">
+        Команда 1
+      </div>
+
+    </div>
+
+
+    <div class="header-item">
+
+      <div class="header-label">
+        ЧАС
+      </div>
+
+      <div id="timer" class="header-value timer">
+        60
+      </div>
+
+    </div>
+
+
+    <div class="header-item">
+
+      <div class="header-label">
+        РАХУНОК
+      </div>
+
+      <div id="roundScore" class="header-value">
+        0
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- КАРТКА -->
+
+  <div id="wordCard" class="word-card">
+
+    <div class="word-label">
+      Поясни це слово
+    </div>
+
+    <div id="word" class="word"></div>
+
+    <div class="hint">
+      ← Пропустити&nbsp;&nbsp;&nbsp;
+      Відгадано →
+    </div>
+
+  </div>
+
+
+  <!-- КНОПКИ -->
+
+  <div class="action-buttons">
+
+    <button id="skipButton" class="skip" type="button">
+      Пропустити
+    </button>
+
+    <button id="correctButton" class="correct" type="button">
+      Відгадано
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     КІНЕЦЬ РАУНДУ
+===================================================== -->
+
+<div id="roundEnd" class="hidden">
+
+  <div class="panel text-center">
+
+    <div class="round-icon">
+      ⏱️
+    </div>
+
+    <h2>
+      Коло завершено!
+    </h2>
+
+    <p id="roundResult"></p>
+
+    <div id="roundScoreInfo" class="round-score"></div>
+
+
+    <div class="round-buttons">
+
+      <button id="continueButton" class="continue-button" type="button">
+        🔄 Наступне коло
+      </button>
+
+      <button id="finishButton" class="finish-button" type="button">
+        🏁 Завершити гру
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="scoreboard">
+
+    <h3>
+      Поточний рахунок
+    </h3>
+
+    <div id="scoreboard"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     ФІНАЛ
+===================================================== -->
+
+<div id="finish" class="hidden">
+
+  <div class="panel text-center">
+
+    <div class="finish-icon">
+      🏆
+    </div>
+
+    <h2>
+      Гру завершено!
+    </h2>
+
+    <div id="finalScores" class="scoreboard"></div>
+
+
+    <button id="newGameButton" class="secondary new-game-button" type="button">
+      🔄 Нова гра
+    </button>
+
+  </div>
+
+</div>
+
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
