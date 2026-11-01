@@ -15,40 +15,6 @@ async function initGame() {
 initGame();
 
 /* =====================================================
-   VANTA GLOBE
-===================================================== */
-
-let vantaEffect = null;
-
-function initVanta() {
-  const dark = document.body.classList.contains("dark-theme");
-
-  if (vantaEffect) {
-    vantaEffect.destroy();
-  }
-
-  vantaEffect = VANTA.NET({
-    el: "#vanta-bg",
-
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: false,
-
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.00,
-    scaleMobile: 1.00,
-
-    color: dark ? 0x4f83ee : 0x2563eb,
-    backgroundColor: dark ? 0x181a1d : 0xf3f4f6,
-
-    points: 12.00,
-    maxDistance: 22.00,
-    spacing: 18.00
-  });
-}
-
-/* =====================================================
    СЛОВА
 ===================================================== */
 
@@ -545,6 +511,17 @@ function updateInterface() {
 
   roundScoreElement.textContent =
     scores[currentTeam];
+
+  const bar =
+    document.getElementById("timerBar");
+
+  bar.style.width =
+    `${(timeLeft / selectedTime) * 100}%`;
+
+  bar.classList.toggle(
+    "low",
+    timeLeft <= 10
+  );
 }
 
 
@@ -644,6 +621,8 @@ function beginRound() {
     "hidden"
   );
 
+  window.scrollTo(0, 0);
+
 
   wordCard.classList.remove(
     "correct-flash",
@@ -651,9 +630,18 @@ function beginRound() {
   );
 
 
+  const bar =
+    document.getElementById("timerBar");
+
+  bar.style.transition = "none";
+
   showWord();
 
   updateInterface();
+
+  void bar.offsetWidth;
+
+  bar.style.transition = "";
 
 
   timer =
@@ -667,6 +655,10 @@ function beginRound() {
           timeLeft--;
 
           updateInterface();
+
+          if (timeLeft > 0 && timeLeft <= 5) {
+            playSound("tick");
+          }
         }
 
 
@@ -683,6 +675,8 @@ function beginRound() {
 
           timerElement.textContent =
             "0";
+
+          playSound("end");
 
           /*
             Ніякого напису
@@ -767,6 +761,8 @@ function correctWord() {
   }
 
 
+  playSound("correct");
+
   animateCard(
     "correct",
     () => {
@@ -804,6 +800,8 @@ function skipWord() {
     return;
   }
 
+
+  playSound("skip");
 
   animateCard(
     "skip",
@@ -1008,6 +1006,8 @@ function finishGame() {
 
   clearInterval(timer);
 
+  playSound("win");
+
 
   roundEnd.classList.add(
     "hidden"
@@ -1185,7 +1185,8 @@ document.addEventListener(
 
     if (
       event.target.tagName ===
-      "INPUT"
+      "INPUT" ||
+      infoDialog.open
     ) {
 
       return;
@@ -1413,57 +1414,6 @@ document
 
 
 /* =====================================================
-   ПРАВИЛА ГРИ
-===================================================== */
-
-const rulesButton =
-  document.getElementById(
-    "rulesButton"
-  );
-
-const rulesPopover =
-  document.getElementById(
-    "rulesPopover"
-  );
-
-
-rulesButton.addEventListener(
-  "click",
-  event => {
-
-    event.stopPropagation();
-
-    rulesPopover.classList.toggle(
-      "hidden"
-    );
-
-  }
-);
-
-
-document.addEventListener(
-  "click",
-  event => {
-
-    if (
-      !rulesPopover.contains(
-        event.target
-      ) &&
-      event.target !==
-        rulesButton
-    ) {
-
-      rulesPopover.classList.add(
-        "hidden"
-      );
-
-    }
-
-  }
-);
-
-
-/* =====================================================
    ТЕМА ДЕНЬ / НІЧ
 ===================================================== */
 
@@ -1502,8 +1452,6 @@ function applyTheme(theme) {
     theme
   );
 
-  initVanta();
-   
 }
 
 
@@ -1540,6 +1488,137 @@ themeToggle.addEventListener(
 
   }
 );
+
+
+/* =====================================================
+   ЗВУК (Web Audio, без файлів)
+===================================================== */
+
+const soundToggle =
+  document.getElementById("soundToggle");
+
+let soundOn =
+  localStorage.getItem("alias-sound") !== "off";
+
+let audioCtx = null;
+
+function applySound() {
+  soundToggle.classList.toggle("muted", !soundOn);
+  soundToggle.title = soundOn ? "Вимкнути звук" : "Увімкнути звук";
+  soundToggle.setAttribute("aria-pressed", String(soundOn));
+}
+
+function tone(freq, start, duration, type = "sine", volume = .18) {
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const t = audioCtx.currentTime + start;
+
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, t);
+
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.exponentialRampToValueAtTime(volume, t + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+
+  osc.connect(gain).connect(audioCtx.destination);
+  osc.start(t);
+  osc.stop(t + duration + 0.02);
+}
+
+function playSound(name) {
+  if (!soundOn) return;
+
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+  } catch (e) {
+    return;
+  }
+
+  switch (name) {
+    case "correct":
+      tone(660, 0, .12);
+      tone(990, .08, .16);
+      break;
+    case "skip":
+      tone(300, 0, .16, "triangle");
+      tone(220, .1, .18, "triangle");
+      break;
+    case "tick":
+      tone(880, 0, .06, "square", .06);
+      break;
+    case "end":
+      tone(523, 0, .2, "triangle");
+      tone(392, .18, .35, "triangle");
+      break;
+    case "win":
+      tone(523, 0, .15);
+      tone(659, .12, .15);
+      tone(784, .24, .15);
+      tone(1047, .36, .35);
+      break;
+    case "click":
+      tone(520, 0, .05, "sine", .08);
+      break;
+  }
+}
+
+soundToggle.addEventListener("click", () => {
+  soundOn = !soundOn;
+  localStorage.setItem("alias-sound", soundOn ? "on" : "off");
+  applySound();
+  playSound("click");
+});
+
+applySound();
+
+
+/* =====================================================
+   ВІКНО [i]
+===================================================== */
+
+const infoDialog =
+  document.getElementById("infoDialog");
+
+function openInfo() {
+  if (typeof infoDialog.showModal === "function") {
+    infoDialog.showModal();
+  } else {
+    infoDialog.setAttribute("open", "");
+  }
+}
+
+document.getElementById("infoButton").addEventListener("click", openInfo);
+document.getElementById("heroRules").addEventListener("click", openInfo);
+
+document.getElementById("infoClose").addEventListener("click", () => {
+  infoDialog.close();
+});
+
+/* клік по затемненню закриває вікно */
+infoDialog.addEventListener("click", event => {
+  if (event.target === infoDialog) {
+    infoDialog.close();
+  }
+});
+
+
+/* =====================================================
+   HERO: кнопка «Грати»
+===================================================== */
+
+document.getElementById("heroStart").addEventListener("click", () => {
+  const settings = document.getElementById("settings");
+  settings.scrollIntoView({
+    behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    block: "start"
+  });
+
+  if (teams.length === 0) {
+    addTeam();
+    addTeam();
+  }
+});
 
 
 /* =====================================================
