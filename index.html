@@ -4,24 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Інформатичний Еліас</title>
-  <link rel="icon" type="image/png" href="https://it-alias.mrochkodsgn.workers.dev/computer.png">
+  <meta name="description" content="Командна гра-пояснялка з термінами з інформатики.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='14' y='8' width='40' height='48' rx='9' fill='%2393c5fd' transform='rotate(10 34 32)'/%3E%3Crect x='8' y='10' width='40' height='48' rx='9' fill='%232563eb'/%3E%3Cpath d='M20 27l-6 7 6 7M36 27l6 7-6 7' fill='none' stroke='%23fff' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='28' cy='34' r='3' fill='%2322c55e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-
-   <div id="vanta-bg"><span style="position: relative; z-index: 1;">
-      
-   </span><canvas class="vanta-canvas" width="1920" height="912" style="display: block; position: absolute; z-index: 0; top: 0px; left: 0px; width: 1536px; height: 730px;"></canvas></div>
-
 <!-- =====================================================
-     ПЕРЕМИКАЧ ТЕМИ
+     ШАПКА
 ===================================================== -->
 
-<button id="themeToggle" class="theme-toggle" type="button" title="Темна тема" aria-label="Змінити тему">☾</button>
+<header class="topbar">
+
+  <a class="logo" href="./" aria-label="Інформатичний Еліас">
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <rect x="14" y="8" width="40" height="48" rx="9" class="logo-back" transform="rotate(10 34 32)"/>
+      <rect x="8" y="10" width="40" height="48" rx="9" class="logo-front"/>
+      <path d="M20 27l-6 7 6 7M36 27l6 7-6 7" class="logo-code"/>
+      <circle cx="28" cy="34" r="3" class="logo-dot"/>
+    </svg>
+    <span>IT&nbsp;Еліас</span>
+  </a>
+
+  <div class="topbar-actions">
+    <button type="button" id="infoButton" class="icon-button info-button" aria-label="Про гру" title="Про гру">i</button>
+
+    <button type="button" id="soundToggle" class="icon-button" aria-label="Звук" title="Звук">
+      <svg viewBox="0 0 24 24" class="sound-on" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" class="stroke"/></svg>
+      <svg viewBox="0 0 24 24" class="sound-off" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" class="stroke"/></svg>
+    </button>
+
+    <button type="button" id="themeToggle" class="icon-button" aria-label="Змінити тему" title="Темна тема">☾</button>
+  </div>
+
+</header>
 
 
-<div class="container">
+<main class="container">
 
 
 <!-- =====================================================
@@ -30,198 +52,120 @@
 
 <div id="setup">
 
-  <h1>
-    🖥️ Інформатичний Еліас
-  </h1>
+  <section class="hero">
 
-  <div class="subtitle">
-    Пояснюй! Відгадуй! Набирай бали!
-  </div>
+    <div class="hero-text">
+      <h1>Інформатичний Еліас</h1>
+
+      <p class="subtitle">Пояснюй терміни з інформатики, не називаючи їх. Команда відгадує — ви набираєте бали.</p>
+
+      <div class="hero-buttons">
+        <button type="button" id="heroStart" class="start-button">▶ Грати</button>
+        <button type="button" id="heroRules" class="secondary">Правила</button>
+      </div>
+    </div>
 
 
-  <div class="panel">
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 520 420" class="hero-svg">
 
+        <!-- колода -->
+        <g class="h-deck">
+          <rect x="150" y="62" width="280" height="200" rx="24" class="h-card-back" transform="rotate(-9 290 162)"/>
+          <rect x="140" y="80" width="280" height="200" rx="24" class="h-card-back2" transform="rotate(5 280 180)"/>
+        </g>
+
+        <!-- головна картка -->
+        <g class="h-card">
+          <rect x="96" y="110" width="310" height="214" rx="26" class="h-card-front"/>
+          <text x="251" y="156" text-anchor="middle" class="h-label">ПОЯСНИ СЛОВО</text>
+          <text x="251" y="230" text-anchor="middle" class="h-word">Алгоритм</text>
+          <path d="M150 258h202" class="h-underline"/>
+          <g class="h-arrows">
+            <path d="M150 292l-12 0m5-6l-6 6 6 6" class="h-arrow-skip"/>
+            <path d="M352 292l12 0m-5-6l6 6-6 6" class="h-arrow-ok"/>
+          </g>
+        </g>
+
+        <!-- бульбашка мовлення -->
+        <g class="h-bubble">
+          <path d="M28 62h120a18 18 0 0 1 18 18v34a18 18 0 0 1-18 18H74l-20 18v-18H28a18 18 0 0 1-18-18V80a18 18 0 0 1 18-18z" class="h-bubble-bg"/>
+          <circle cx="62" cy="97" r="7" class="h-dot"/>
+          <circle cx="88" cy="97" r="7" class="h-dot"/>
+          <circle cx="114" cy="97" r="7" class="h-dot"/>
+        </g>
+
+        <!-- таймер -->
+        <g class="h-timer">
+          <circle cx="430" cy="100" r="44" class="h-timer-bg"/>
+          <circle cx="430" cy="100" r="34" class="h-timer-track"/>
+          <circle cx="430" cy="100" r="34" class="h-timer-ring" transform="rotate(-90 430 100)"/>
+          <text x="430" y="109" text-anchor="middle" class="h-timer-text">45</text>
+        </g>
+
+        <!-- +1 -->
+        <g class="h-plus">
+          <rect x="400" y="300" width="84" height="52" rx="26" class="h-plus-bg"/>
+          <text x="442" y="335" text-anchor="middle" class="h-plus-text">+1</text>
+        </g>
+
+        <!-- команда -->
+        <g class="h-team">
+          <rect x="60" y="350" width="226" height="46" rx="23" class="h-team-bg"/>
+          <circle cx="86" cy="373" r="10" class="h-team-dot"/>
+          <text x="106" y="379" class="h-team-text">Кібер Коти</text>
+          <text x="262" y="379" text-anchor="end" class="h-team-score">7</text>
+        </g>
+
+      </svg>
+    </div>
+
+  </section>
+
+
+  <div class="panel setup-panel" id="settings">
 
     <!-- ЧАС -->
-
     <div class="setting">
-
-      <div class="setting-title">
-        ⏱ Час одного раунду
-      </div>
-
+      <div class="setting-title">Час раунду</div>
       <div class="time-buttons">
-
-        <button data-time="30">
-          30 с
-        </button>
-
-        <button data-time="60" class="active">
-          60 с
-        </button>
-
-        <button data-time="90">
-          90 с
-        </button>
-
-        <button data-time="120">
-          120 с
-        </button>
-
+        <button type="button" data-time="30">30 с</button>
+        <button type="button" data-time="60" class="active">60 с</button>
+        <button type="button" data-time="90">90 с</button>
+        <button type="button" data-time="120">120 с</button>
       </div>
-
     </div>
-
 
     <!-- СКЛАДНІСТЬ -->
-
     <div class="setting">
-
-      <div class="setting-title">
-        🎯 Складність
-      </div>
-
+      <div class="setting-title">Складність</div>
       <div class="difficulty-buttons">
-
-        <button type="button" data-difficulty="easy" class="active">
-          Легкий
-        </button>
-
-        <button type="button" data-difficulty="hard">
-          Складний
-        </button>
-
+        <button type="button" data-difficulty="easy" class="active">Легкий</button>
+        <button type="button" data-difficulty="hard">Складний</button>
       </div>
-
     </div>
-
 
     <!-- ШТРАФ -->
-
     <div class="setting">
-
       <div class="switch-row">
-
-        <div>
-
-          <div class="setting-title">
-            ⚠️ Штраф за пропуск
-          </div>
-
-          <div class="switch-description">
-            
-          </div>
-
-        </div>
-
-
+        <div class="setting-title">Штраф за пропуск</div>
         <label class="switch">
-
-          <input type="checkbox" id="skipPenalty" checked>
-
+          <input type="checkbox" id="skipPenalty" checked aria-label="Штраф за пропуск">
           <span class="slider"></span>
-
         </label>
-
       </div>
-
     </div>
-
 
     <!-- КОМАНДИ -->
-
     <div class="setting">
-
-      <label>
-        👥 Команди
-      </label>
-
+      <div class="setting-title">Команди</div>
       <div id="teams"></div>
-
-      <button type="button" id="addTeamButton" class="secondary">
-        ＋ Додати команду
-      </button>
-
+      <button type="button" id="addTeamButton" class="secondary add-team">＋ Додати команду</button>
     </div>
 
-
-    <button type="button" id="startButton" class="start-button">
-      ▶ Почати гру
-    </button>
-
+    <button type="button" id="startButton" class="start-button wide">▶ Почати гру</button>
 
     <div id="error" class="error hidden"></div>
-
-  </div>
-
-
-  <!-- =================================================
-       НИЖНЯ ПАНЕЛЬ
-  ================================================== -->
-
-  <div class="bottom-bar">
-
-    <div class="rules-wrap">
-
-      <button type="button" id="rulesButton" class="rules-button">
-        Правила гри
-      </button>
-
-
-      <div id="rulesPopover" class="rules-popover hidden">
-
-        <strong>
-          Правила гри Еліас
-        </strong>
-
-        <p>
-          Один гравець пояснює слово,
-          не називаючи саме слово.
-        </p>
-
-        <p>
-          Команда намагається відгадати
-          якомога більше слів за відведений час.
-        </p>
-
-        <p>
-          Відгадано — +1 бал.
-          Пропустити — наступне слово.
-        </p>
-
-        <p>
-          Якщо увімкнено штраф за пропуск,
-          за нього знімається 1 бал.
-        </p>
-
-        <p>
-          Коли час закінчився,
-          можна завершити пояснення останього
-          слова.
-        </p>
-        <p>
-          <small>
-            Версія від 11.10.2026
-          </small>
-          
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <div class="social-links">
-
-      <a href="https://t.me/informatics_hub" target="_blank" rel="noopener">
-        Telegram-канал
-      </a>
-
-      <a href="https://github.com/whyuxavier" target="_blank" rel="noopener">
-        GitHub
-      </a>
-
-    </div>
 
   </div>
 
@@ -234,81 +178,43 @@
 
 <div id="game" class="hidden">
 
-
   <div class="game-header">
 
-
     <div class="header-item">
-
-      <div class="header-label">
-        КОМАНДА
-      </div>
-
-      <div id="currentTeam" class="header-value">
-        Команда 1
-      </div>
-
+      <div class="header-label">Команда</div>
+      <div id="currentTeam" class="header-value">Команда 1</div>
     </div>
 
-
     <div class="header-item">
-
-      <div class="header-label">
-        ЧАС
-      </div>
-
-      <div id="timer" class="header-value timer">
-        60
-      </div>
-
+      <div class="header-label">Час</div>
+      <div id="timer" class="header-value timer">60</div>
     </div>
 
-
     <div class="header-item">
-
-      <div class="header-label">
-        РАХУНОК
-      </div>
-
-      <div id="roundScore" class="header-value">
-        0
-      </div>
-
+      <div class="header-label">Рахунок</div>
+      <div id="roundScore" class="header-value">0</div>
     </div>
 
   </div>
 
+  <div class="timer-bar"><div id="timerBar"></div></div>
+
 
   <!-- КАРТКА -->
-
   <div id="wordCard" class="word-card">
-
-    <div class="word-label">
-      Поясни це слово
-    </div>
-
+    <div class="word-label">Поясни слово</div>
     <div id="word" class="word"></div>
-
     <div class="hint">
-      ← Пропустити&nbsp;&nbsp;&nbsp;
-      Відгадано →
+      <span class="hint-skip">←</span>
+      <span class="hint-ok">→</span>
     </div>
-
   </div>
 
 
   <!-- КНОПКИ -->
-
   <div class="action-buttons">
-
-    <button id="skipButton" class="skip" type="button">
-      Пропустити
-    </button>
-
-    <button id="correctButton" class="correct" type="button">
-      Відгадано
-    </button>
-
+    <button id="skipButton" class="skip" type="button">Пропустити</button>
+    <button id="correctButton" class="correct" type="button">Відгадано</button>
   </div>
 
 </div>
@@ -322,42 +228,27 @@
 
   <div class="panel text-center">
 
-    <div class="round-icon">
-      ⏱️
-    </div>
+    <svg class="state-icon" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="35" r="22" class="si-face"/>
+      <path d="M26 6h12M32 6v7M32 35V22M32 35l9 6" class="si-line"/>
+    </svg>
 
-    <h2>
-      Коло завершено!
-    </h2>
+    <h2>Коло завершено!</h2>
 
-    <p id="roundResult"></p>
+    <p id="roundResult" class="muted"></p>
 
     <div id="roundScoreInfo" class="round-score"></div>
 
-
     <div class="round-buttons">
-
-      <button id="continueButton" class="continue-button" type="button">
-        🔄 Наступне коло
-      </button>
-
-      <button id="finishButton" class="finish-button" type="button">
-        🏁 Завершити гру
-      </button>
-
+      <button id="continueButton" class="continue-button" type="button">Наступне коло</button>
+      <button id="finishButton" class="finish-button" type="button">Завершити гру</button>
     </div>
 
   </div>
 
-
   <div class="scoreboard">
-
-    <h3>
-      Поточний рахунок
-    </h3>
-
+    <h3>Поточний рахунок</h3>
     <div id="scoreboard"></div>
-
   </div>
 
 </div>
@@ -371,29 +262,66 @@
 
   <div class="panel text-center">
 
-    <div class="finish-icon">
-      🏆
-    </div>
+    <svg class="state-icon trophy" viewBox="0 0 64 64" aria-hidden="true">
+      <path d="M20 8h24v14a12 12 0 0 1-24 0z" class="tr-cup"/>
+      <path d="M20 13h-8v4a8 8 0 0 0 8 8M44 13h8v4a8 8 0 0 1-8 8" class="tr-handle"/>
+      <path d="M32 34v10M22 54h20l-3-10H25z" class="tr-base"/>
+    </svg>
 
-    <h2>
-      Гру завершено!
-    </h2>
+    <h2>Гру завершено!</h2>
 
     <div id="finalScores" class="scoreboard"></div>
 
-
-    <button id="newGameButton" class="secondary new-game-button" type="button">
-      🔄 Нова гра
-    </button>
+    <button id="newGameButton" class="secondary new-game-button" type="button">Нова гра</button>
 
   </div>
 
 </div>
 
+</main>
 
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+
+<!-- =====================================================
+     ВІКНО [i]
+===================================================== -->
+
+<dialog id="infoDialog" class="info-dialog">
+
+  <div class="info-head">
+    <h2>Інформатичний Еліас</h2>
+    <button type="button" id="infoClose" class="icon-button" aria-label="Закрити">✕</button>
+  </div>
+
+  <p class="muted">Командна гра-пояснялка з термінами з інформатики для уроків і перерв.</p>
+
+  <h3>Правила</h3>
+  <ul>
+    <li>Один гравець пояснює слово, не називаючи його.</li>
+    <li>Команда відгадує якомога більше слів за раунд.</li>
+    <li>Відгадано — +1 бал. Пропуск — −1 бал, якщо увімкнено штраф.</li>
+    <li>Коли час вийшов, можна доказати останнє слово.</li>
+  </ul>
+
+  <h3>Керування</h3>
+  <div class="controls">
+    <div><kbd>→</kbd><span>або свайп вправо — відгадано</span></div>
+    <div><kbd>←</kbd><span>або свайп вліво — пропустити</span></div>
+    <div><kbd>Esc</kbd><span>закрити це вікно</span></div>
+  </div>
+
+  <div class="info-links">
+    <a href="https://github.com/whyuxavier/it-alias" target="_blank" rel="noopener" class="gh-link">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>
+      GitHub
+    </a>
+    <a href="https://t.me/informatics_hub" target="_blank" rel="noopener" class="tg-link">Telegram-канал</a>
+  </div>
+
+  <p class="version">Оновлено 01.11.2026</p>
+
+</dialog>
+
+
 <script src="script.js"></script>
 </body>
 </html>
