@@ -376,7 +376,7 @@ function addTeam() {
   */
 
   teams.push(
-    `Команда ${teams.length + 1}`
+    generateTeamName()
   );
 
   errorElement.classList.add(
@@ -1589,7 +1589,6 @@ function openInfo() {
 }
 
 document.getElementById("infoButton").addEventListener("click", openInfo);
-document.getElementById("heroRules").addEventListener("click", openInfo);
 
 document.getElementById("infoClose").addEventListener("click", () => {
   infoDialog.close();
@@ -1604,25 +1603,56 @@ infoDialog.addEventListener("click", event => {
 
 
 /* =====================================================
-   HERO: кнопка «Грати»
+   ФОН: СІТКА ЗА КУРСОРОМ
 ===================================================== */
 
-document.getElementById("heroStart").addEventListener("click", () => {
-  const settings = document.getElementById("settings");
-  settings.scrollIntoView({
-    behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-    block: "start"
-  });
+const bgGrid =
+  document.querySelector(".bg-grid");
 
-  if (teams.length === 0) {
-    addTeam();
-    addTeam();
-  }
+const calmMotion =
+  matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let gridFrame = null;
+
+window.addEventListener("pointermove", event => {
+
+  if (event.pointerType !== "mouse") return;
+
+  if (gridFrame) return;
+
+  gridFrame = requestAnimationFrame(() => {
+
+    gridFrame = null;
+
+    const x = event.clientX;
+    const y = event.clientY;
+
+    bgGrid.style.setProperty("--mx", `${x}px`);
+    bgGrid.style.setProperty("--my", `${y}px`);
+
+    /* легкий паралакс: сітка трохи зсувається за курсором */
+    if (!calmMotion) {
+      const px = (x / innerWidth - .5) * 16;
+      const py = (y / innerHeight - .5) * 16;
+      bgGrid.style.setProperty("--px", `${px}px`);
+      bgGrid.style.setProperty("--py", `${py}px`);
+    }
+
+    bgGrid.classList.add("active");
+  });
+});
+
+document.documentElement.addEventListener("pointerleave", () => {
+  bgGrid.classList.remove("active");
 });
 
 
 /* =====================================================
    ПОЧАТКОВИЙ РЕНДЕР
 ===================================================== */
+
+/* одразу дві команди з веселими назвами — можна грати з першого кліку */
+teams.push(generateTeamName());
+teams.push(generateTeamName());
 
 renderTeams();
