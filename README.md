@@ -1,1 +1,5 @@
-Інформатичний Еліас: командна гра-пояснялка з термінами з інформатики. Пояснюй слово, не називаючи його, а команда відгадує. Налаштування часу раунду, складності, штрафу за пропуск, кілька команд, темна тема. Чистий HTML, CSS і JS.
+# it-alias
+
+Переїхало в ІТ-Майстерню: https://whyuxavier.github.io/it-maysternia/apps/it-alias/
+
+Код: https://github.com/whyuxavier/it-maysternia/tree/main/apps/it-alias
